@@ -21,7 +21,7 @@ public class Bag extends Container {
     @Override
     public OneItem takeItem() throws CannotAccessTheContainer {
         if (checkIsContainerClosed()) {
-            System.out.println("The" + getName() + " is closed, can't take anything.");
+            System.out.println("The " + getName() + " is closed, can't take anything.");
             throw new CannotAccessTheContainer("You're trying to get an item from the closed box");
         }
         int randomIndex = new Random().nextInt(getCurrentSize());

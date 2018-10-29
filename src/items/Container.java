@@ -38,6 +38,11 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
         return currentSize;
     }
 
+    // instead of calculating weight of all the container
+    void changeWeight(double value) {
+        setWeight(getWeight() + value);
+    }
+
     void addItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, CannotAccessTheContainer, AddTheSameException {
         if (checkIsContainerClosed())
             throw new CannotAccessTheContainer("You can't add this item. ", this.getName());
@@ -69,12 +74,7 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
         currentSize--;
     }
 
-    // instead of calculating weight of all the container
-    void changeWeight(double value) {
-        setWeight(getWeight() + value);
-    }
-
-    /**
+   /**
      * Polite version of findByName without exceptions
      *
      * @param name String not null
@@ -118,6 +118,7 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
         int level = 1;
         getInfo(level);
     }
+
     // It made in such a way only for output hierarchy
     private void getInfo(int level) {
         super.getInfo();
