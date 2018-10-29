@@ -15,90 +15,68 @@ class BagTest {
     }
 
     @org.junit.jupiter.api.Test
-    void putInTheSame() {
+    void putInTheSame() throws CannotAccessTheContainer, ItemAlreadyPlacedException, AddTheSameException, ItemStoreException {
         Bag bag1 = new Bag("bag1", 0.5, "white");
         Bag bag2 = new Bag("bag1", 0.5, "white");
         Bag bag3 = new Bag("bag1", 0.5, "white");
         Bag bag4 = new Bag("bag1", 0.5, "white");
         Bag bag5 = new Bag("bag1", 0.5, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
-        try {
-            bag1.pushItem(item1);
-            assertThrows(AddTheSameException.class, () -> bag1.pushItem(bag1));
-            bag1.pushItem(bag2);
-            bag2.pushItem(bag1);
-        } catch (ItemAlreadyPlacedException | ItemStoreException | AddTheSameException | CannotAccessTheContainer e) {
-            e.printStackTrace();
-        }
-        bag1.getInfo();
+
+        bag1.pushItem(item1);
+        assertThrows(AddTheSameException.class, () -> bag1.pushItem(bag1));
+        bag1.pushItem(bag2);
+
+        assertThrows(CannotAccessTheContainer.class, () -> bag2.pushItem(bag1));
+        bag3.pushItem(bag1);
+        assertThrows(CannotAccessTheContainer.class, () -> bag1.pushItem(bag3));
+        assertThrows(AddTheSameException.class, () -> bag3.pushItem(bag3));
+        bag4.pushItem(bag3);
+        assertThrows(ItemAlreadyPlacedException.class, () -> bag4.pushItem(bag3));
+        bag5.pushItem(bag4);
+        assertThrows(ItemAlreadyPlacedException.class, () -> bag5.pushItem(bag3));
+
+        bag5.getInfo();
     }
 
     @org.junit.jupiter.api.Test
-    void calculateWeight() {
+    void calculateWeight() throws CannotAccessTheContainer, ItemIsEmptyException, AddTheSameException, ItemAlreadyPlacedException, ItemStoreException {
         Bag bag1 = new Bag("bag1", 0.5, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
-        try {
-            bag1.pushItem(item1);
-            bag1.pushItem(new OneItem("brick", 5, "red"));
-            bag1.pushItem(new OneItem("brick", 5, "grey"));
-        } catch (ItemAlreadyPlacedException | ItemStoreException a) {
-            System.err.println(a.getMessage());
-        } catch (AddTheSameException | CannotAccessTheContainer e) {
-            e.printStackTrace();
-        }
+
+        bag1.pushItem(item1);
+        bag1.pushItem(new OneItem("brick", 5, "red"));
+        assertThrows(ItemStoreException.class, () -> bag1.pushItem(new OneItem("brick", 5, "grey")));
         assertEquals(12.5, bag1.getWeight());
-        try {
-            bag1.removeItem();
-            bag1.removeItem();
-        } catch (ItemIsEmptyException | CannotAccessTheContainer e) {
-            e.printStackTrace();
-        }
+        bag1.removeItem();
+        bag1.removeItem();
         assertEquals(0.5, bag1.getWeight());
     }
 
     @org.junit.jupiter.api.Test
-    void takeItem() {
+    void takeItem() throws CannotAccessTheContainer, ItemIsEmptyException, AddTheSameException, ItemAlreadyPlacedException, ItemStoreException {
         Bag bag1 = new Bag("bag1", 1, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
-        try {
-            bag1.pushItem(item1);
-            bag1.pushItem(new OneItem("ball", 5, "red"));
-            bag1.pushItem(new OneItem("book", 1, "grey"));
-        } catch (ItemAlreadyPlacedException | ItemStoreException a) {
-            System.err.println(a.getMessage());
-        } catch (AddTheSameException | CannotAccessTheContainer e) {
-            e.printStackTrace();
-        }
-
+        bag1.pushItem(item1);
+        bag1.pushItem(new OneItem("ball", 5, "red"));
+        bag1.pushItem(new OneItem("book", 1, "grey"));
         bag1.takeItem();
         bag1.takeItem();
-        try {
-            bag1.removeItem();
-        } catch (ItemIsEmptyException e) {
-            e.getMessage();
-        } catch (CannotAccessTheContainer cannotAccessTheContainer) {
-            cannotAccessTheContainer.printStackTrace();
-        }
+        bag1.removeItem();
         bag1.takeItem();
     }
 
     @org.junit.jupiter.api.Test
-    void TestExceptions() {
-        OneItem uniqueItem = new OneItem("key", 0.05, "rare", "golden");
+    void TestExceptions() throws CannotAccessTheContainer, ItemAlreadyPlacedException, AddTheSameException, ItemStoreException, ItemIsEmptyException {
+        OneItem uniqueItem = new OneItem("key", 0.058, "rare", "golden");
         var item2 = new OneItem("handle", 0.03, "oiled");
         OneItem item3 = new OneItem("desk", 10, "brown");
         OneItem item4 = new OneItem("fork", 0.01, "copper");
         Bag bag1 = new Bag("bag1", 1, 2, 10);
         Bag bag2 = new Bag("bag2", 0.5, 2, 5, "weak");
 
-        try {
-            bag1.pushItem(uniqueItem);
-            bag1.pushItem(item2);
-        } catch (ItemAlreadyPlacedException | ItemStoreException a) {
-            System.err.println(a.getMessage());
-        } catch (AddTheSameException | CannotAccessTheContainer e) {
-            e.printStackTrace();
-        }
+        bag1.pushItem(uniqueItem);
+        bag1.pushItem(item2);
 
         // difference?
         assertThrows(ItemStoreException.class, () -> bag1.pushItem(item4));
@@ -106,49 +84,49 @@ class BagTest {
         assertThrows(ItemAlreadyPlacedException.class, () -> bag2.pushItem(item2));
         assertThrows(ItemStoreException.class, () -> bag2.pushItem(item3));
 
-        try {
-            bag2.removeItem();
-        } catch (ItemIsEmptyException a) {
-            System.err.println(a.getMessage());
-        } catch (CannotAccessTheContainer cannotAccessTheContainer) {
-            cannotAccessTheContainer.printStackTrace();
-        }
+        assertThrows(ItemIsEmptyException.class, bag2::removeItem);
 
         assertThrows(ItemIsEmptyException.class, bag2::removeItem);
 
+        assertEquals(1.088, bag1.getWeight(), 0.00001);
+        assertEquals(0.5, bag2.getWeight(), 0.00001);
         bag1.getInfo();
         bag2.getInfo();
     }
 
     @org.junit.jupiter.api.Test
-    void pushAndRemoveItem() {
+    void pushAndRemoveItem() throws CannotAccessTheContainer, ItemAlreadyPlacedException, AddTheSameException, ItemStoreException, ItemIsEmptyException {
         Bag bag1 = new Bag("bag1", 1, "white");
+        Bag bag2 = new Bag("bag2", 1, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
-        try {
-            bag1.pushItem(item1);
-            bag1.pushItem(new OneItem("bar", 5, "silver"));
-            bag1.pushItem(new OneItem("vase", 1, "transparent"));
-        } catch (ItemAlreadyPlacedException | ItemStoreException a) {
-            System.err.println(a.getMessage());
-        } catch (AddTheSameException | CannotAccessTheContainer e) {
-            e.printStackTrace();
-        }
-        try {
-            bag1.removeItem();
-            bag1.removeItem();
-            bag1.getInfo();
-            bag1.removeItem();
-            bag1.getInfo();
-            bag1.removeItem();
-            bag1.pushItem(new OneItem("fork", 0.005, "copper"));
-        } catch (ItemIsEmptyException e) {
-            System.err.print(e.getMessage());
-        } catch (ItemAlreadyPlacedException | ItemStoreException a) {
-            System.err.println(a.getMessage());
-        } catch (AddTheSameException | CannotAccessTheContainer e) {
-            e.printStackTrace();
-        }
-        assertEquals(0, bag1.getCurrentSize());
+
+        bag1.pushItem(item1);
+        bag1.pushItem(new OneItem("bar", 5, "silver"));
+        bag1.pushItem(new OneItem("vase", 1, "transparent"));
+
+        bag1.removeItem();
+        bag1.removeItem();
+        bag1.getInfo();
+        bag1.removeItem();
+        bag1.getInfo();
+        assertThrows(ItemIsEmptyException.class, bag1::removeItem);
+        bag1.pushItem(bag2);
+        assertThrows(CannotAccessTheContainer.class, bag2::removeItem);
+        bag1.getInfo();
+        bag1.removeItem();
+        System.out.println("---------");
+        bag1.getInfo();
+//        bag1.removeItem();
+        bag2.pushItem(item1);
+        bag1.pushItem(bag2);
+        assertThrows(CannotAccessTheContainer.class, bag2::removeItem);
+        bag1.removeItem();
+
+        bag1.pushItem(new OneItem("fork", 0.0054321, "copper"));
+        bag1.getInfo();
+
+        assertEquals(1.0054321, bag1.getWeight(), 0.00000001);
+        assertEquals(8, bag2.getWeight(), 0.00001);
     }
 
     @org.junit.jupiter.api.Test
@@ -159,7 +137,7 @@ class BagTest {
     }
 
     @org.junit.jupiter.api.Test
-    void findAndIteratorTest() {
+    void findAndIteratorTest() throws ItemIsEmptyException {
         OneItem item1 = new OneItem("potato", 3, "fresh");
         OneItem item2 = new OneItem("milk", 1, "cheap");
         OneItem item3 = new OneItem("bread", 0.5, "warm");
@@ -168,15 +146,11 @@ class BagTest {
         items.add(item2);
         items.add(item3);
         Bag bag = new Bag("bag", 0.01, items, 7, 15, "black");
-        try {
-            // double search!! slow?
-            if (bag.containItem("sad"))
-                bag.findByName("sad").getInfo();
-            if (bag.containItem("potato"))
-                bag.findByName("potato").getInfo();
-        } catch (ItemIsEmptyException e) {
-            e.printStackTrace();
-        }
+        // double search!! slow?
+        if (bag.containItem("sad"))
+            bag.findByName("sad").getInfo();
+        if (bag.containItem("potato"))
+            bag.findByName("potato").getInfo();
 
         // Iterator test!
         System.out.println();
@@ -184,6 +158,7 @@ class BagTest {
                 bag) {
             a.getInfo();
         }
+
         System.out.println();
         System.out.println(bag.toString());
     }

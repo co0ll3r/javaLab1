@@ -26,12 +26,16 @@ public class Bag extends Container {
     @Override
     public void removeItem() throws ItemIsEmptyException, CannotAccessTheContainer {
         super.removeItem();
-        int index = new Random().nextInt(getCurrentSize() + 1);
+       // int index = new Random().nextInt(getCurrentSize() + 1);
+        int index = new Random().nextInt(getItemContainer().size());
+
         OneItem itemForDelete = getItemContainer().get(index);
         itemForDelete.itemRemoved(); // make isAdded = false
 
-        System.out.println(itemForDelete + " has deleted!"); // maybe doesn't need
+        System.out.println("DELETE: " + itemForDelete + " has deleted!"); // maybe doesn't need
 //        System.out.println(-getItemContainer().get(index).getWeight());
+        if (getItemContainer().get(index) instanceof Container)
+            ((Container) getItemContainer().get(index)).openContainer();
 
         changeWeight(-getItemContainer().get(index).getWeight());
         getItemContainer().remove(index);

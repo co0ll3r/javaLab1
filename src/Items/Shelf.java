@@ -22,8 +22,11 @@ public class Shelf extends Container {
         super.removeItem();
         OneItem itemRem = getItemContainer().get(getCurrentSize());
         //There could be some problems!
-/*        if (itemRem instanceof Box)
-            ((Box) itemRem).openBox();*/
+        if (itemRem instanceof Container)
+            ((Container) itemRem).openContainer();
+        // not sure about exact this implementation
+//        if (getItemContainer().get(getCurrentSize() - 1) instanceof Container)
+        //           ((Container) getItemContainer().get(getCurrentSize() - 1)).openContainer();
         changeWeight(-(itemRem.getWeight()));
         getItemContainer().remove(getCurrentSize());
 //        calculateWeight();

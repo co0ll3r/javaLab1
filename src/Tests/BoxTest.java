@@ -113,6 +113,19 @@ class BoxTest {
 
     @Test
     void putOnShelf() {
+        Box box1 = new Box("crate", 1, 3, 15, "wooden");
+        Box box2 = new Box("bag", 2, 3, 15, "wooden");
+        Box box3 = new Box("box", 3, 3, 15, "wooden");
+        var item1 = new OneItem("book", 1.451, "flat", "1984");
+        try {
+            box1.pushItem(box2);
+            box1.pushItem(box3);
+            box1.pushItem(item1);
+            OneItem box4 = box1.takeItem();
+            box4.getInfo();
+        } catch (ItemAlreadyPlacedException | AddTheSameException | ItemStoreException | CannotAccessTheContainer e) {
+            e.printStackTrace();
+        }
 
     }
 }

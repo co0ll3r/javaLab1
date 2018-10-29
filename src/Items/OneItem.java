@@ -72,7 +72,7 @@ public class OneItem {
     @Override
     public String toString() {
         return String.format("Name: %s; Weight: %.2f; " + (isAdded ? "Already added" : "Not added") +
-                "; level - %d; properties: %s.", name, weight, properties.toString());
+                "; properties: %s.", name, weight, properties.toString());
     }
 }
 
@@ -109,12 +109,12 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
     }
 
     void addItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, CannotAccessTheContainer, AddTheSameException {
-        if (newItem == this)
-            throw new AddTheSameException("You're trying to add an item the same item!");
         if (checkIsContainerClosed())
             throw new CannotAccessTheContainer("You can't add this item. ", this.getName());
         if (newItem.isAdded())
             throw new ItemAlreadyPlacedException();
+        if (newItem == this)
+            throw new AddTheSameException("You're trying to add an item the same item!");
         if (currentSize >= maxItems)
             throw new ItemStoreException(newItem, this.getName() + " overflow! You're trying to put " + (currentSize + 1) +
                     " items in " + this.getName() + ", when the maximum is " + maxItems + ".");
@@ -131,13 +131,10 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
     }
 
     void removeItem() throws ItemIsEmptyException, CannotAccessTheContainer {
-        if (getCurrentSize() == 0)
-            throw new ItemIsEmptyException();
         if (checkIsContainerClosed())
             throw new CannotAccessTheContainer("You can't delete this item. ", this.getName());
-        // not sure about exact this implementation
-        if (getItemContainer().get(getCurrentSize() - 1) instanceof Container)
-            ((Container) getItemContainer().get(getCurrentSize())).openContainer();
+        if (getCurrentSize() == 0)
+            throw new ItemIsEmptyException();
         currentSize--;
     }
 

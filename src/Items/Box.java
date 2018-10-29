@@ -35,7 +35,8 @@ public class Box extends Container {
             System.out.println("The box is closed, can't take anything.");
             throw new CannotAccessTheContainer("You're trying to get an item from the closed box");
         }
-        return getItemContainer().get(new Random().nextInt(getCurrentSize())); // take random
+        int randomIndex = new Random().nextInt(getCurrentSize());
+        return getItemContainer().get(randomIndex); // take random
     }
 
     // it's copy of the removeItem() from the Bag class
@@ -44,15 +45,17 @@ public class Box extends Container {
 /*        if (checkIsContainerClosed()) {
             System.out.println("The box is closed, can't remove anything.");
         } else {*/
-            super.removeItem();
-            int index = new Random().nextInt(getCurrentSize() + 1);
-            OneItem itemForDelete = getItemContainer().get(index);
-            itemForDelete.itemRemoved(); // make isAdded = false
+        super.removeItem();
+        int index = new Random().nextInt(getCurrentSize() + 1);
+        OneItem itemForDelete = getItemContainer().get(index);
+        itemForDelete.itemRemoved(); // make isAdded = false
 
-            System.out.println(itemForDelete + " has deleted!"); // maybe doesn't need
+        System.out.println("DELETE: " + itemForDelete + " has deleted!"); // maybe doesn't need
+        if (getItemContainer().get(index) instanceof Container)
+            ((Container) getItemContainer().get(index)).openContainer();
 
-            changeWeight(-getItemContainer().get(index).getWeight());
-            getItemContainer().remove(index);
+        changeWeight(-getItemContainer().get(index).getWeight());
+        getItemContainer().remove(index);
     }
 
     // you can make: if closed, then transform into a stack with two items, the first one is the closed box;
@@ -66,19 +69,6 @@ public class Box extends Container {
         addItem(newItem);
         changeWeight(newItem.getWeight());
     }
-
-    /*
-    void openContainer() {
-        isBoxClosed = false;
-    }
-
-    void closeContainer() {
-        isBoxClosed = true;
-    }
-    boolean checkIsContainerClosed() {
-        return isBoxClosed;
-    }
-*/
 
     @Override
     public String toString() {
