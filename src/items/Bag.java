@@ -14,13 +14,23 @@ public class Bag extends Container {
         super(name, weight, maxItems, maxWeight, properties);
     }
 
-    public Bag(String name, double weight, ArrayList<OneItem> newContainer, int maxItems, int maxWeight, String properties) {
+    public Bag(String name, double weight, ArrayList<OneItem> newContainer, int maxItems, int maxWeight, String... properties) {
         super(name, weight, newContainer, maxItems, maxWeight, properties);
     }
 
-    @Override
+/*    @Override
     public OneItem takeItem() {
         return getItemContainer().get(new Random().nextInt(getCurrentSize())); // take random
+    }*/
+
+    @Override
+    public OneItem takeItem() throws CannotAccessTheContainer {
+        if (checkIsContainerClosed()) {
+            System.out.println("The box is closed, can't take anything.");
+            throw new CannotAccessTheContainer("You're trying to get an item from the closed box");
+        }
+        int randomIndex = new Random().nextInt(getCurrentSize());
+        return getItemContainer().get(randomIndex); // take random
     }
 
     @Override

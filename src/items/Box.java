@@ -5,10 +5,7 @@ import items.itemExceptions.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Box extends Container {
-//    private boolean isBoxClosed = false;
-
-
+public class Box extends Bag{
     public Box(String name, double weight, String... properties) {
         super(name, weight, properties);
         getProperties().add("flat");
@@ -24,7 +21,7 @@ public class Box extends Container {
         getProperties().add("flat");
     }
 
-    @Override
+/*    @Override
     public OneItem takeItem() throws CannotAccessTheContainer {
         if (checkIsContainerClosed()) {
             System.out.println("The box is closed, can't take anything.");
@@ -56,6 +53,7 @@ public class Box extends Container {
         addItem(newItem);
         changeWeight(newItem.getWeight());
     }
+    */
 
     @Override
     public String toString() {
