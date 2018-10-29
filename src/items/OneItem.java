@@ -1,7 +1,5 @@
 package items;
 
-import items.itemExceptions.*;
-
 import java.util.*;
 
 public class OneItem {
@@ -43,7 +41,6 @@ public class OneItem {
         return properties;
     }
 
-    // any alternatives?
     boolean isAdded() {
         return isAdded;
     }
@@ -68,7 +65,6 @@ public class OneItem {
         System.out.print("; ");
     }
 
-    // properties are shown with brackets [], fix it?
     @Override
     public String toString() {
         return String.format("Name: %s; Weight: %.2f; " + (isAdded ? "Already added" : "Not added") +

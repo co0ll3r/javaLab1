@@ -118,7 +118,7 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
         getInfo(level);
     }
     // It made in such a way only for output hierarchy
-    void getInfo(int level) {
+    private void getInfo(int level) {
         super.getInfo();
         System.out.print("items: " + getCurrentSize() + "\n");
         for (OneItem a :
@@ -150,8 +150,6 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
     boolean checkIsContainerClosed() {
         return isContainerClosed;
     }
-
-    /** */
 
     @Override
     public Iterator<OneItem> iterator() {
