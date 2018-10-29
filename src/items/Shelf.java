@@ -1,6 +1,6 @@
-package Items;
+package items;
 
-import Items.ItemExceptions.*;
+import items.itemExceptions.*;
 
 public class Shelf extends Container {
     public Shelf(String name, double weight, String... properties) {
@@ -18,18 +18,12 @@ public class Shelf extends Container {
 
     @Override
     public void removeItem() throws ItemIsEmptyException, CannotAccessTheContainer {
-        //   getItemContainer().remove(index);
         super.removeItem();
         OneItem itemRem = getItemContainer().get(getCurrentSize());
-        //There could be some problems!
         if (itemRem instanceof Container)
             ((Container) itemRem).openContainer();
-        // not sure about exact this implementation
-//        if (getItemContainer().get(getCurrentSize() - 1) instanceof Container)
-        //           ((Container) getItemContainer().get(getCurrentSize() - 1)).openContainer();
         changeWeight(-(itemRem.getWeight()));
         getItemContainer().remove(getCurrentSize());
-//        calculateWeight();
     }
 
     // make flat constraints

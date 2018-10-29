@@ -1,6 +1,6 @@
-package Items;
+package items;
 
-import Items.ItemExceptions.*;
+import items.itemExceptions.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,16 +26,15 @@ public class Bag extends Container {
     @Override
     public void removeItem() throws ItemIsEmptyException, CannotAccessTheContainer {
         super.removeItem();
-       // int index = new Random().nextInt(getCurrentSize() + 1);
         int index = new Random().nextInt(getItemContainer().size());
 
         OneItem itemForDelete = getItemContainer().get(index);
         itemForDelete.itemRemoved(); // make isAdded = false
 
         System.out.println("DELETE: " + itemForDelete + " has deleted!"); // maybe doesn't need
-//        System.out.println(-getItemContainer().get(index).getWeight());
-        if (getItemContainer().get(index) instanceof Container)
-            ((Container) getItemContainer().get(index)).openContainer();
+        if (itemForDelete instanceof Container) {
+            ((Container) itemForDelete).openContainer();
+        }
 
         changeWeight(-getItemContainer().get(index).getWeight());
         getItemContainer().remove(index);
@@ -43,12 +42,8 @@ public class Bag extends Container {
 
     @Override
     public void pushItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, AddTheSameException, CannotAccessTheContainer {
-        /*if (newItem == this) {
-            throw new AddTheSameException("You're trying to the item the same item!");
-        }*/
         addItem(newItem);
         changeWeight(newItem.getWeight());
-//        calculateWeight();
     }
 
     @Override

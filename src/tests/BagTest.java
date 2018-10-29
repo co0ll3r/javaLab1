@@ -1,7 +1,7 @@
-package Tests;
+package tests;
 
-import Items.*;
-import Items.ItemExceptions.*;
+import items.*;
+import items.itemExceptions.*;
 
 import java.util.ArrayList;
 
@@ -78,7 +78,6 @@ class BagTest {
         bag1.pushItem(uniqueItem);
         bag1.pushItem(item2);
 
-        // difference?
         assertThrows(ItemStoreException.class, () -> bag1.pushItem(item4));
         assertThrows(ItemAlreadyPlacedException.class, () -> bag2.pushItem(uniqueItem));
         assertThrows(ItemAlreadyPlacedException.class, () -> bag2.pushItem(item2));

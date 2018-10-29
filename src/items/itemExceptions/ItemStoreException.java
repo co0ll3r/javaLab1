@@ -1,6 +1,6 @@
-package Items.ItemExceptions;
+package items.itemExceptions;
 
-import Items.OneItem;
+import items.OneItem;
 
 public class ItemStoreException extends Exception {
 /*    ItemStoreException(){

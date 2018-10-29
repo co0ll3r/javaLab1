@@ -1,4 +1,4 @@
-package Items.ItemExceptions;
+package items.itemExceptions;
 
 public class AddTheSameException extends Exception{
     public AddTheSameException(String message){

@@ -1,4 +1,4 @@
-package Items.ItemExceptions;
+package items.itemExceptions;
 
 public class ItemIsEmptyException extends Exception{
     public ItemIsEmptyException(){

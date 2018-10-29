@@ -1,4 +1,4 @@
-package Items.ItemExceptions;
+package items.itemExceptions;
 
 public class CannotAccessTheContainer extends Exception{
     public CannotAccessTheContainer(String message){

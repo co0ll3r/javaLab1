@@ -1,7 +1,7 @@
-package Tests;
+package tests;
 
-import Items.*;
-import Items.ItemExceptions.*;
+import items.*;
+import items.itemExceptions.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,6 @@
-package Items;
+package items;
 
-import Items.ItemExceptions.*;
+import items.itemExceptions.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,7 +14,6 @@ public class Box extends Container {
         getProperties().add("flat");
     }
 
-    // how to add flat!!??
     public Box(String name, double weight, int maxItems, int maxWeight, String... properties) {
         super(name, weight, maxItems, maxWeight, properties);
         getProperties().add("flat");
@@ -25,10 +24,6 @@ public class Box extends Container {
         getProperties().add("flat");
     }
 
-    // Maybe make some abstract or interface?
-    // it's copy of the takeItem() from the Bag class
-    // fix null return!
-    // or use exceptions?
     @Override
     public OneItem takeItem() throws CannotAccessTheContainer {
         if (checkIsContainerClosed()) {
@@ -42,9 +37,6 @@ public class Box extends Container {
     // it's copy of the removeItem() from the Bag class
     @Override
     public void removeItem() throws ItemIsEmptyException, CannotAccessTheContainer {
-/*        if (checkIsContainerClosed()) {
-            System.out.println("The box is closed, can't remove anything.");
-        } else {*/
         super.removeItem();
         int index = new Random().nextInt(getCurrentSize() + 1);
         OneItem itemForDelete = getItemContainer().get(index);
@@ -61,11 +53,6 @@ public class Box extends Container {
     // you can make: if closed, then transform into a stack with two items, the first one is the closed box;
     @Override
     public void pushItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, AddTheSameException, CannotAccessTheContainer {
-/*        if (newItem == this)
-            throw new AddTheSameException("You're trying to the item the same item!");*/
-/*        if (checkIsContainerClosed()){
-            System.out.println("The box is closed, can't add anything.");
-        } else {*/
         addItem(newItem);
         changeWeight(newItem.getWeight());
     }

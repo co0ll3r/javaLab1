@@ -1,83 +1,13 @@
-package Items;
+package items;
 
-import Items.ItemExceptions.*;
+import items.itemExceptions.*;
 
-import java.util.*;
-
-public class OneItem {
-    private String name;
-    private double weight;
-    private Set<String> properties;
-    private boolean isAdded;
-
-    public OneItem(String name, double weight, String... properties) {
-        this.name = name;
-        this.weight = weight;
-        if (properties.length > 0) {
-            this.properties = new HashSet<>();
-            this.properties.addAll(Arrays.asList(properties));
-        }
-    }
-
-    void itemAdded() {
-        isAdded = true;
-    }
-
-    void itemRemoved() {
-        isAdded = false;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    Set<String> getProperties() {
-        return properties;
-    }
-
-    // any alternatives?
-    boolean isAdded() {
-        return isAdded;
-    }
-
-    // what will happen if the fields is empty?
-    public void getInfo() {
-        System.out.print("Name: " + getName());
-
-        if (weight > 0) { // Is it works for double?
-            System.out.print(", Weight: " + getWeight());
-        }
-
-        if (properties != null) {
-            System.out.print(", Properties: { ");
-            for (String e :
-                    getProperties()) {
-                System.out.print(e + " ");
-            }
-            System.out.print("}");
-        }
-
-        System.out.print("; ");
-    }
-
-    // properties are shown with brackets [], fix it?
-    @Override
-    public String toString() {
-        return String.format("Name: %s; Weight: %.2f; " + (isAdded ? "Already added" : "Not added") +
-                "; properties: %s.", name, weight, properties.toString());
-    }
-}
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 abstract class Container extends OneItem implements Iterable<OneItem> {
-    private ArrayList<OneItem> itemContainer;
+    private List<OneItem> itemContainer;
     private int currentSize;
     private int maxItems = 10;
     private int maxWeight = 15;
@@ -161,8 +91,6 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
         return false;
     }
 
-    // make an exception
-
     /**
      * Use
      *
@@ -170,7 +98,6 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
      * @return OneItem or NULL if the container doesn't have an item with such the name
      */
     public OneItem findByName(String name) throws ItemIsEmptyException {
-        // or return null is better?
         if (getCurrentSize() == 0)
             throw new ItemIsEmptyException();
         for (OneItem a :
@@ -202,7 +129,6 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
                 ((Container) a).getInfo(level + 1);
             else {
                 a.getInfo();
-//                System.out.println();
             }
         }
         if (getCurrentSize() != 0)
@@ -247,7 +173,7 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
     @Override
     public String toString() {
         return super.toString() +
-                String.format(" Current size: %d; MaxItems: %d; MaxWeight: %d; Items in the container: %s",
+                String.format(" Current size: %d; MaxItems: %d; MaxWeight: %d; items in the container: %s",
                         getCurrentSize(), maxItems, maxWeight, getItemContainer().toString());
     }
 
@@ -256,4 +182,3 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
     abstract void pushItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, AddTheSameException, CannotAccessTheContainer;
 
 }
-
