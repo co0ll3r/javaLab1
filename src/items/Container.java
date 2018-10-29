@@ -55,6 +55,7 @@ abstract class Container extends OneItem implements Iterable<OneItem> {
         newItem.itemAdded();
         currentSize++;
         itemContainer.add(newItem);
+        changeWeight(newItem.getWeight());
         // not sure about exact this implementation
         if (newItem instanceof Container)
             ((Container) newItem).closeContainer();

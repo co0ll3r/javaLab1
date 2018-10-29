@@ -18,15 +18,10 @@ public class Bag extends Container {
         super(name, weight, newContainer, maxItems, maxWeight, properties);
     }
 
-/*    @Override
-    public OneItem takeItem() {
-        return getItemContainer().get(new Random().nextInt(getCurrentSize())); // take random
-    }*/
-
     @Override
     public OneItem takeItem() throws CannotAccessTheContainer {
         if (checkIsContainerClosed()) {
-            System.out.println("The box is closed, can't take anything.");
+            System.out.println("The" + getName() + " is closed, can't take anything.");
             throw new CannotAccessTheContainer("You're trying to get an item from the closed box");
         }
         int randomIndex = new Random().nextInt(getCurrentSize());
@@ -53,7 +48,6 @@ public class Bag extends Container {
     @Override
     public void pushItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, AddTheSameException, CannotAccessTheContainer {
         addItem(newItem);
-        changeWeight(newItem.getWeight());
     }
 
     @Override

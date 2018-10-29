@@ -33,7 +33,6 @@ public class Shelf extends Container {
                 newItem.getProperties()) {
             if (a.equalsIgnoreCase("flat")) {
                 addItem(newItem);
-                changeWeight(newItem.getWeight());
                 return;
             }
         }
