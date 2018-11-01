@@ -9,10 +9,10 @@ public class main {
         OneItem abc = new OneItem("toy", 2, "red", "wide", "smart");
         Bag bag1 = new Bag("bag", 0.5, "grey", "doted");
         try {
-            bag1.pushItem(abc);
-            bag1.pushItem(new OneItem("cat", 5, "fluffy"));
-            bag1.pushItem(new OneItem("table", 20));
-            bag1.pushItem(new OneItem("chair", 8));
+            bag1.addItem(abc);
+            bag1.addItem(new OneItem("cat", 5, "fluffy"));
+            bag1.addItem(new OneItem("table", 20));
+            bag1.addItem(new OneItem("chair", 8));
             bag1.getInfo();
 //            bag1.takeItem(0).getInfo();
 
@@ -23,16 +23,16 @@ public class main {
         }*/
 
             Bag bag2 = new Bag("bag", 1);
-            bag1.pushItem(abc);
+            bag1.addItem(abc);
             bag2.getInfo();
 
             Shelf shelf1 = new Shelf("shelf", 1, 5, 35, "brown", "wooden");
 
-            shelf1.pushItem(abc);
-            shelf1.pushItem(new OneItem("brick", 5, "flat", "fusion"));
-            shelf1.pushItem(new OneItem("brick", 8, "grey"));
-            shelf1.pushItem(new OneItem("gold bar", 25, "expensive"));
-            shelf1.pushItem(bag2);
+            shelf1.addItem(abc);
+            shelf1.addItem(new OneItem("brick", 5, "flat", "fusion"));
+            shelf1.addItem(new OneItem("brick", 8, "grey"));
+            shelf1.addItem(new OneItem("gold bar", 25, "expensive"));
+            shelf1.addItem(bag2);
             shelf1.getInfo();
         } catch (ItemAlreadyPlacedException | ItemStoreException a) {
             System.err.println(a.getMessage());

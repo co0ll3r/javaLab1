@@ -23,18 +23,18 @@ class BagTest {
         Bag bag5 = new Bag("bag1", 0.5, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
 
-        bag1.pushItem(item1);
-        assertThrows(AddTheSameException.class, () -> bag1.pushItem(bag1));
-        bag1.pushItem(bag2);
+        bag1.addItem(item1);
+        assertThrows(AddTheSameException.class, () -> bag1.addItem(bag1));
+        bag1.addItem(bag2);
 
-        assertThrows(CannotAccessTheContainer.class, () -> bag2.pushItem(bag1));
-        bag3.pushItem(bag1);
-        assertThrows(CannotAccessTheContainer.class, () -> bag1.pushItem(bag3));
-        assertThrows(AddTheSameException.class, () -> bag3.pushItem(bag3));
-        bag4.pushItem(bag3);
-        assertThrows(ItemAlreadyPlacedException.class, () -> bag4.pushItem(bag3));
-        bag5.pushItem(bag4);
-        assertThrows(ItemAlreadyPlacedException.class, () -> bag5.pushItem(bag3));
+        assertThrows(CannotAccessTheContainer.class, () -> bag2.addItem(bag1));
+        bag3.addItem(bag1);
+        assertThrows(CannotAccessTheContainer.class, () -> bag1.addItem(bag3));
+        assertThrows(AddTheSameException.class, () -> bag3.addItem(bag3));
+        bag4.addItem(bag3);
+        assertThrows(ItemAlreadyPlacedException.class, () -> bag4.addItem(bag3));
+        bag5.addItem(bag4);
+        assertThrows(ItemAlreadyPlacedException.class, () -> bag5.addItem(bag3));
 
         bag5.getInfo();
     }
@@ -44,9 +44,9 @@ class BagTest {
         Bag bag1 = new Bag("bag1", 0.5, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
 
-        bag1.pushItem(item1);
-        bag1.pushItem(new OneItem("brick", 5, "red"));
-        assertThrows(ItemStoreException.class, () -> bag1.pushItem(new OneItem("brick", 5, "grey")));
+        bag1.addItem(item1);
+        bag1.addItem(new OneItem("brick", 5, "red"));
+        assertThrows(ItemStoreException.class, () -> bag1.addItem(new OneItem("brick", 5, "grey")));
         assertEquals(12.5, bag1.getWeight());
         bag1.removeItem();
         bag1.removeItem();
@@ -57,9 +57,9 @@ class BagTest {
     void takeItem() throws CannotAccessTheContainer, ItemIsEmptyException, AddTheSameException, ItemAlreadyPlacedException, ItemStoreException {
         Bag bag1 = new Bag("bag1", 1, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
-        bag1.pushItem(item1);
-        bag1.pushItem(new OneItem("ball", 5, "red"));
-        bag1.pushItem(new OneItem("book", 1, "grey"));
+        bag1.addItem(item1);
+        bag1.addItem(new OneItem("ball", 5, "red"));
+        bag1.addItem(new OneItem("book", 1, "grey"));
         bag1.takeItem();
         bag1.takeItem();
         bag1.removeItem();
@@ -75,13 +75,13 @@ class BagTest {
         Bag bag1 = new Bag("bag1", 1, 2, 10);
         Bag bag2 = new Bag("bag2", 0.5, 2, 5, "weak");
 
-        bag1.pushItem(uniqueItem);
-        bag1.pushItem(item2);
+        bag1.addItem(uniqueItem);
+        bag1.addItem(item2);
 
-        assertThrows(ItemStoreException.class, () -> bag1.pushItem(item4));
-        assertThrows(ItemAlreadyPlacedException.class, () -> bag2.pushItem(uniqueItem));
-        assertThrows(ItemAlreadyPlacedException.class, () -> bag2.pushItem(item2));
-        assertThrows(ItemStoreException.class, () -> bag2.pushItem(item3));
+        assertThrows(ItemStoreException.class, () -> bag1.addItem(item4));
+        assertThrows(ItemAlreadyPlacedException.class, () -> bag2.addItem(uniqueItem));
+        assertThrows(ItemAlreadyPlacedException.class, () -> bag2.addItem(item2));
+        assertThrows(ItemStoreException.class, () -> bag2.addItem(item3));
 
         assertThrows(ItemIsEmptyException.class, bag2::removeItem);
 
@@ -99,9 +99,9 @@ class BagTest {
         Bag bag2 = new Bag("bag2", 1, "white");
         OneItem item1 = new OneItem("cat", 7, "black", "fluffy", "cute");
 
-        bag1.pushItem(item1);
-        bag1.pushItem(new OneItem("bar", 5, "silver"));
-        bag1.pushItem(new OneItem("vase", 1, "transparent"));
+        bag1.addItem(item1);
+        bag1.addItem(new OneItem("bar", 5, "silver"));
+        bag1.addItem(new OneItem("vase", 1, "transparent"));
 
         bag1.removeItem();
         bag1.removeItem();
@@ -109,19 +109,19 @@ class BagTest {
         bag1.removeItem();
         bag1.getInfo();
         assertThrows(ItemIsEmptyException.class, bag1::removeItem);
-        bag1.pushItem(bag2);
+        bag1.addItem(bag2);
         assertThrows(CannotAccessTheContainer.class, bag2::removeItem);
         bag1.getInfo();
         bag1.removeItem();
         System.out.println("---------");
         bag1.getInfo();
 //        bag1.removeItem();
-        bag2.pushItem(item1);
-        bag1.pushItem(bag2);
+        bag2.addItem(item1);
+        bag1.addItem(bag2);
         assertThrows(CannotAccessTheContainer.class, bag2::removeItem);
         bag1.removeItem();
 
-        bag1.pushItem(new OneItem("fork", 0.0054321, "copper"));
+        bag1.addItem(new OneItem("fork", 0.0054321, "copper"));
         bag1.getInfo();
 
         assertEquals(1.0054321, bag1.getWeight(), 0.00000001);

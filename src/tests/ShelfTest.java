@@ -15,10 +15,10 @@ class ShelfTest {
         Box box3 = new Box("box3", 1.5, 4, 20, "flat", "wooden");
         var item1 = new OneItem("book", 0.451, "flat", "1984");
 
-        box1.pushItem(item1);
-        shelf1.pushItem(box1);
-        shelf1.pushItem(box2);
-        shelf1.pushItem(box3);
+        box1.addItem(item1);
+        shelf1.addItem(box1);
+        shelf1.addItem(box2);
+        shelf1.addItem(box3);
         //  box3.takeItem();
         assertThrows(CannotAccessTheContainer.class, box3::takeItem);
         shelf1.getInfo();
@@ -35,15 +35,15 @@ class ShelfTest {
         var item5 = new OneItem("server", 7, "flat");
         var item6 = new OneItem("computer", 3, "FLAT");
 
-        shelf1.pushItem(item1);
-        shelf1.pushItem(item2);
-        shelf1.pushItem(item3);
-        assertThrows(ItemStoreException.class, () -> shelf1.pushItem(item4));
-        shelf1.pushItem(item6);
-        assertThrows(ItemStoreException.class, () -> shelf1.pushItem(item5));
-        assertThrows(ItemAlreadyPlacedException.class, () -> shelf1.pushItem(item1));
-        shelf1.pushItem(new OneItem("spoon", 0.0015, "engraved", "small"));
-        shelf1.pushItem(new OneItem("spoon", 0.0015, "engraved", "small", "flag"));
+        shelf1.addItem(item1);
+        shelf1.addItem(item2);
+        shelf1.addItem(item3);
+        assertThrows(ItemStoreException.class, () -> shelf1.addItem(item4));
+        shelf1.addItem(item6);
+        assertThrows(ItemStoreException.class, () -> shelf1.addItem(item5));
+        assertThrows(ItemAlreadyPlacedException.class, () -> shelf1.addItem(item1));
+        shelf1.addItem(new OneItem("spoon", 0.0015, "engraved", "small"));
+        shelf1.addItem(new OneItem("spoon", 0.0015, "engraved", "small", "flag"));
 
         assertEquals(11.451, shelf1.getWeight());
         shelf1.removeItem();
@@ -71,8 +71,8 @@ class ShelfTest {
         var item6 = new OneItem("computer", 3, "FLAT");
         Box box1 = new Box("box1", 1, 3, 5, "small");
 
-        box1.pushItem(item1);
-        box1.pushItem(item2);
+        box1.addItem(item1);
+        box1.addItem(item2);
 
     }
 

@@ -46,8 +46,8 @@ public class Bag extends Container {
     }
 
     @Override
-    public void pushItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, AddTheSameException, CannotAccessTheContainer {
-        addItem(newItem);
+    public void addItem(OneItem newItem) throws ItemAlreadyPlacedException, ItemStoreException, AddTheSameException, CannotAccessTheContainer {
+        super.addItem(newItem);
     }
 
     @Override

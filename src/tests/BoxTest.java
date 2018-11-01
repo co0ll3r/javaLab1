@@ -20,22 +20,22 @@ class BoxTest {
         var item4 = new OneItem("barbell", 2.5, "flat");
         var item5 = new OneItem("server", 7, "flat");
         try {
-            box1.pushItem(item1);
-            box1.pushItem(item2);
-            box1.pushItem(item3);
-            box2.pushItem(box1);
-            box2.pushItem(item4);
-            box3.pushItem(box2);
-            box3.pushItem(item5);
-            box4.pushItem(box3);
+            box1.addItem(item1);
+            box1.addItem(item2);
+            box1.addItem(item3);
+            box2.addItem(box1);
+            box2.addItem(item4);
+            box3.addItem(box2);
+            box3.addItem(item5);
+            box4.addItem(box3);
         } catch (ItemAlreadyPlacedException | CannotAccessTheContainer | ItemStoreException | AddTheSameException e) {
             e.printStackTrace();
         }
         box4.getInfo();
         System.out.println();
         box1.getInfo();
-/*        assertThrows(AddTheSameException.class, () -> box2.pushItem(box2));
-        assertThrows(CannotAccessTheContainer.class, () -> box2.pushItem(box1));
+/*        assertThrows(AddTheSameException.class, () -> box2.addItem(box2));
+        assertThrows(CannotAccessTheContainer.class, () -> box2.addItem(box1));
  */   }
 
     @Test
@@ -48,17 +48,17 @@ class BoxTest {
         var item5 = new OneItem("server", 7, "flat");
         var item6 = new OneItem("computer", 3, "FLAT");
         try {
-            box1.pushItem(item1);
-            box1.pushItem(item2);
-            box1.pushItem(item3);
-            assertThrows(ItemStoreException.class, () -> box1.pushItem(item4));
-            box1.pushItem(item6);
+            box1.addItem(item1);
+            box1.addItem(item2);
+            box1.addItem(item3);
+            assertThrows(ItemStoreException.class, () -> box1.addItem(item4));
+            box1.addItem(item6);
             box1.getInfo();
-            assertThrows(ItemStoreException.class, () -> box1.pushItem(item5));
-            assertThrows(ItemAlreadyPlacedException.class, () -> box1.pushItem(item1));
-            assertThrows(ItemStoreException.class, () -> box1.pushItem
+            assertThrows(ItemStoreException.class, () -> box1.addItem(item5));
+            assertThrows(ItemAlreadyPlacedException.class, () -> box1.addItem(item1));
+            assertThrows(ItemStoreException.class, () -> box1.addItem
                     (new OneItem("spoon", 0.0015, "engraved", "small")));
-            assertThrows(ItemStoreException.class, () -> box1.pushItem
+            assertThrows(ItemStoreException.class, () -> box1.addItem
                     (new OneItem("spoon", 0.0015, "engraved", "small", "flag")));
         } catch (ItemAlreadyPlacedException | ItemStoreException | AddTheSameException | CannotAccessTheContainer e) {
             e.printStackTrace();
@@ -87,9 +87,9 @@ class BoxTest {
         var item4 = new OneItem("laptop", 2.5, "flat", "asus");
         var item5 = new OneItem("dvd-player", 4, "flat");
         try {
-            box.pushItem(item1);
-            box.pushItem(item2);
-            box.pushItem(item3);
+            box.addItem(item1);
+            box.addItem(item2);
+            box.addItem(item3);
         } catch (ItemAlreadyPlacedException | ItemStoreException | AddTheSameException | CannotAccessTheContainer e) {
             e.printStackTrace();
         }
@@ -98,8 +98,8 @@ class BoxTest {
         box.closeContainer();
 //        if (!box.checkIsBoxClosed())
         assertThrows(CannotAccessTheContainer.class, () -> box.takeItem().getInfo());
-        assertThrows(CannotAccessTheContainer.class, () -> box.pushItem(item4));
-        assertThrows(CannotAccessTheContainer.class, () -> box.pushItem(item5));
+        assertThrows(CannotAccessTheContainer.class, () -> box.addItem(item4));
+        assertThrows(CannotAccessTheContainer.class, () -> box.addItem(item5));
         assertThrows(CannotAccessTheContainer.class, box::removeItem);
         try {
             box.openContainer();
@@ -118,9 +118,9 @@ class BoxTest {
         Box box3 = new Box("box", 3, 3, 15, "wooden");
         var item1 = new OneItem("book", 1.451, "flat", "1984");
         try {
-            box1.pushItem(box2);
-            box1.pushItem(box3);
-            box1.pushItem(item1);
+            box1.addItem(box2);
+            box1.addItem(box3);
+            box1.addItem(item1);
             OneItem box4 = box1.takeItem();
             box4.getInfo();
         } catch (ItemAlreadyPlacedException | AddTheSameException | ItemStoreException | CannotAccessTheContainer e) {
